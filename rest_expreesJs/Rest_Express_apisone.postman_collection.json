@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "41924fbe-b9d7-465a-8fa2-93688377d853",
+		"name": "Rest_Express_apis Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24386368"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"accessToken\");",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"var authtoken = jsonData.accessToken;",
+							"console.log(\"authtoken\", jsonData);",
+							"pm.globals.unset(\"auth-token\");",
+							"pm.globals.set(\"auth-token\", authtoken);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"priya@gmail.com\",\n    \"password\":\"sripriya\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localhost}}api/user/login"
+			},
+			"response": []
+		},
+		{
+			"name": "upload",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWZkZjI1YzBjZmJhNjAzOWM1NmU3MTgiLCJpYXQiOjE2NjgyMTczODd9.DNEsiO0A6od4MxI8K2AW7ydUrYyHd1Nzh3XuLMjnxEM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "avatar",
+							"type": "file",
+							"src": "/Users/gone/Downloads/photo_2022-01-11 06.16.47.jpeg"
+						}
+					]
+				},
+				"url": "{{localhost}}api/upload"
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"chakra\",\n    \"email\":\"chakra@gmail.com\",\n    \"password\":\"chakra\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localhost}}api/user/register"
+			},
+			"response": []
+		},
+		{
+			"name": "PostsTestLookup",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWZkZjI1YzBjZmJhNjAzOWM1NmU3MTgiLCJpYXQiOjE2NjgyMTczODd9.DNEsiO0A6od4MxI8K2AW7ydUrYyHd1Nzh3XuLMjnxEM",
+						"type": "text"
+					}
+				],
+				"url": "{{localhost}}api/posts/lookUP"
+			},
+			"response": []
+		},
+		{
+			"name": "posts",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": {
+						"value": "{{auth-token}}",
+						"in": "header",
+						"key": "auth-token"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{localhost}}api/posts/"
+			},
+			"response": []
+		},
+		{
+			"name": "postUpdate",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": {
+						"value": "{{auth-token}}",
+						"in": "header",
+						"key": "auth-token"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"title\": \"smartenspaces.com adad\",\n            \"body\": \"jeevatitle showing blog\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localhost}}api/posts/61fd33a3ac85fc3b7d55cdf4"
+			},
+			"response": []
+		},
+		{
+			"name": "deletePost",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": {
+						"value": "{{auth-token}}",
+						"in": "header",
+						"key": "auth-token"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"title\": \"smartenspaces.com adad\",\n            \"body\": \"jeevatitle showing blog\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localhost}}api/posts/63d611bfd501d30a9d2a8592"
+			},
+			"response": []
+		},
+		{
+			"name": "Users",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": {
+						"value": "{{auth-token}}",
+						"in": "header",
+						"key": "auth-token"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": "{{localhost}}api/user/getUsers"
+			},
+			"response": []
+		},
+		{
+			"name": "updateuser",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": {
+						"value": "{{auth-token}}",
+						"in": "header",
+						"key": "auth-token"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\":\"61fd33f7ac85fc3b7d55cdf6\",\n    \"name\":\"chakra\",\n    \"email\":\"chakra@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localhost}}api/user/updateUser"
+			},
+			"response": []
+		},
+		{
+			"name": "deleteuser",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": {
+						"value": "{{auth-token}}",
+						"in": "header",
+						"key": "auth-token"
+					}
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "auth-token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWZkZjI1YzBjZmJhNjAzOWM1NmU3MTgiLCJpYXQiOjE2NjgyMTczODd9.DNEsiO0A6od4MxI8K2AW7ydUrYyHd1Nzh3XuLMjnxEM",
+						"type": "text"
+					}
+				],
+				"url": "{{localhost}}api/user/delete/636efb320e9fd8030d2895be"
+			},
+			"response": []
+		},
+		{
+			"name": "getUser",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": {
+						"value": "{{auth-token}}",
+						"in": "header",
+						"key": "auth-token"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{localhost}}api/user/getUser/61fd33f7ac85fc3b7d55cdf6"
+			},
+			"response": []
+		},
+		{
+			"name": "postUpdate",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": {
+						"value": "{{auth-token}}",
+						"in": "header",
+						"key": "auth-token"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n            \"title\": \"smartenspaces.com adad\",\n            \"body\": \"jeevatitle showing blog\"\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{localhost}}api/posts/61fd33a3ac85fc3b7d55cdf4"
+			},
+			"response": []
+		}
+	]
+}
