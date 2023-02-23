@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 //@routes POST api/posts
 const {registeration,loginValdation} = require('../../validation');
-
+const verified = require('./verifyToken');
 
 router.post('/register',async (req,res)=>{
 console.log(req.body);
@@ -42,7 +42,7 @@ console.log(req.body);
 });
 
 router.post('/login',async (req,res)=>{
-    
+    console.log("ssf")
     const {error}  = loginValdation(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
@@ -56,7 +56,61 @@ router.post('/login',async (req,res)=>{
     //create token 
 
     const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
-    res.header('auth-token',token).send(token)
+    const data = {id:user._id,name:user.name,email:user.email,date:user.date,accessToken:token}
+    res.header('auth-token',token).send(data)
+
+    //res.send("logged in!");
+});
+
+router.post('/getUsers',verified,async (req,res)=>{
+    
+    try{
+        const posts = await User.find();
+        if(!posts) throw Error("No items");
+        let tokenData = req.user
+        let data = {posts,tokenData}
+        res.status(200).json(data); 
+      }catch(err){
+          res.status(400).json(err);
+      }
+
+    //res.send("logged in!");
+});
+
+router.put('/updateUser',verified,async (req,res)=>{
+    //console.log("user.update(",req);
+    try{
+        const user = await User.update({_id:req.body.id},{name:req.body.name});
+        if(!user) throw Error("something went wrong while saving post ");
+        res.status(200).json(req.body);
+    }catch(err){
+        console.log(err);
+        res.status(400).json(err);
+    }
+
+    //res.send("logged in!");
+});
+router.delete('/delete/:id',verified,async(req,res)=>{
+    try{
+      //const posts = await Posts.findByIdAndDelete(req.params.id);
+      const users = await User.findByIdAndDelete(req.params.id);
+      if(!users) throw Error("No posts found!");
+        res.status(200).json({success:true}); 
+    }catch(err){
+        res.status(400).json(err);
+    }
+});
+
+router.get('/getUser/:id',verified,async (req,res)=>{
+    //console.log("user.update(",req);
+    try{
+        const user = await User.find({"_id":req.params.id});
+        if(!user) throw Error("something went wrong while saving post ");
+        res.status(200).json(user[0]);
+    }catch(err){
+        console.log(err);
+        res.status(400).json(err);
+    }
 
     //res.send("logged in!");
 });

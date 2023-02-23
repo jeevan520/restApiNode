@@ -8,16 +8,21 @@ dotenv.config();
 //@Routes
 const authRoute = require('./routes/api/auth')
 const postsRoutes = require('./routes/api/posts');
-const router = require("./routes/api/posts");
+const uploadRoutes = require('./routes/api/upload');
+//const router = require("./routes/api/posts");
 const app = express();
 
 //body parser middleware
 
 app.use(express.json());
-
-mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:true,useFindAndModify:false})
+//process.env.MONGO_URI
+mongoose.connect(MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:true,useFindAndModify:false})
   .then(() => console.log("MONGODB CONNECTED!"))
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.log(process.env.MONGO_URI)
+    console.log(err)
+}
+  );
 
 // app.get('/',(req,res)=>{
 //     res.send("Hello from node")
@@ -25,9 +30,13 @@ mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:
 
 
 //User routes
+var cors = require('cors')
+
+app.use(cors())
 
 app.use('/api/posts',postsRoutes);
-app.use('/api/user',authRoute)
+app.use('/api/user',authRoute);
+app.use('/api/upload',uploadRoutes)
 
 const PORT = process.env.PORT || 5000;
 
