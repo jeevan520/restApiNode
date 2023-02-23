@@ -34,7 +34,7 @@ router.post('/',verified,async (req,res)=>{
     }
 });
 
-router.get('/ ',verified,async(req,res)=>{
+router.get('/lookUP',verified,async(req,res)=>{
     // try{
     //   const posts = await Posts.find();
     //   if(!posts) throw Error("No items");
