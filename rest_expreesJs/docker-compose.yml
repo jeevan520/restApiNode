@@ -1,1 +1,16 @@
-
+version: '3'
+services:
+  app:
+    container_name: my-node-app
+    build: .
+    ports:
+      - '5500:5500'
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo:5
+    volumes:
+      - ./data:/data/db
+    ports:
+      - '27017:27017'
