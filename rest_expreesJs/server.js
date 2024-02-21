@@ -16,17 +16,19 @@ const app = express();
 
 app.use(express.json());
 //process.env.MONGO_URI
+console.log("MONGO_URI",MONGO_URI)
 mongoose.connect(MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:true,useFindAndModify:false})
   .then(() => console.log("MONGODB CONNECTED!"))
   .catch(err => {
+    console.log("error while conncting");
     console.log(process.env.MONGO_URI)
     console.log(err)
 }
   );
 
-// app.get('/',(req,res)=>{
-//     res.send("Hello from node")
-// });
+app.get('/',(req,res)=>{
+    res.send("Hello from node")
+});
 
 
 //User routes
