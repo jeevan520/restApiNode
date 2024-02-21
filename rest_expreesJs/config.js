@@ -1,4 +1,4 @@
 module.exports = {
-  MONGO_URI:"mongodb://localhost/jeevanDb",
+  MONGO_URI:"mongodb://mongo:27017/jeevan",
 };
 
