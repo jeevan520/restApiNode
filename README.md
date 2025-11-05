@@ -264,7 +264,7 @@ Feel free to **fork**, **open issues**, or **submit pull requests**.
 ## 👨‍💻 Author
 
 **Jeevan**
-🔗 [GitHub Profile](https://github.com/jeevan520)
+🔗 [GitHub Profile](https://github.com/jeevan520/restApiNode)
 
 ---
 
